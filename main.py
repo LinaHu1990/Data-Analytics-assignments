@@ -1,67 +1,40 @@
-__winc_id__ = "ae539110d03e49ea8738fd413ac44ba8"
-__human_name__ = "files"
+# Do not modify these lines
+__winc_id__ = '7b9401ad7f544be2a23321292dd61cb6'
+__human_name__ = 'arguments'
 
-from functools import cache
-import os
-import zipfile
-from pathlib import Path
-
-
-
+# Add your code after this line
 #part1 
-def clean_cache(): 
-    path = '/Users/linah/Winc/files/cache'
-    dir=os.path.exists(path)
-    if not dir: #if path doesn't exist create folder cache
-        os.mkdir(path)
-    else: #if path does exist remove files in folder cache
-        for files in os.listdir(path):
-            new_path = path+"/"+files
-            if os.path.isfile(new_path):
-                print("Deleting file:", new_path)
-                os.remove(new_path)
-    return 'cache folder is created and empty'
-            
-#print(clean_cache())
+#define function greet w. arg name, greeting template
 
-#part2 #import zipfile module
-def cache_zip(zip_file_path,dir_path):
-    file = '/Users/linah/Winc/files/data.zip'
-    zip_obj=zipfile.ZipFile(file,"r")#question: why first create zip_object if it is already a zip object?
-    zip_obj.extractall('/Users/linah/Winc/files/cache') 
-    return 'zip file is unpacked'
+def greet(name,greeting_template="Hello"):
+    greet2=print(f"{greeting_template}, {name}!")
+    return greet2
 
-zip = '/Users/linah/Winc/files/data.zip'
-dir = '/Users/linah/Winc/files/cache'
-#print(cache_zip(zip,dir))
+greet("Bob")
 
-#part3 #obtain absolute path cache folder, irrespective of os 
-#return list of all files in cache 
-def cached_files():
-    abs_path = os.path.abspath('/Users/linah/Winc/files/cache')
-    list_cached_files = []
-    for path in os.listdir(abs_path):
-        add_path =os.path.join(abs_path,path)
-        list_cached_files.append(add_path)
-    return list_cached_files
+#part2 
+def force(mass,body="earth"):       
+    body_dictionary = {
+        "sun":274.0,
+        "jupiter":24.9,
+        "neptune":11.2,
+        "saturn": 10.4,
+        "earth":9.8,
+        "uranus":8.9,
+        "venus":8.9,
+        "mars":3.7,
+        "mercury":3.7,
+        "moon":1.6,
+        "pluto":0.6,    }    
+    force_gravity = body_dictionary[body]*mass
+    return round(force_gravity,1)
 
-#print(cached_files())
-#question: outcome should be list of all file paths? instead of list of all file names? 
+print(force(3,"sun"))
+ 
+#part3
+def pull(m1, m2, d):
+    G = 6.674*10**-11
+    calculation = (m1*m2/(d**2))*G
+    return calculation
 
-#part4 
-def find_password(list):
-    for textfile in list:
-        file = open(textfile,'r')
-        lines=file.readlines()
-        for item in lines:
-            item_into_list = item.split("\n")
-            for detail in item_into_list: 
-                if "password" in detail: 
-                    return detail[detail.find(" ")+1:]
-                    #alternative return detail[10:40]#question how to best only return password itself?                     
-
-print(find_password(cached_files()))
-
-
-     
-
+print(pull(0.1,1500,3))
